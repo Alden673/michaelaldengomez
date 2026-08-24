@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Michael Alden Gomez A — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --navy: #1a1a2e;
+    --navy-light: #2a2a45;
+    --cream: #f7f4ef;
+    --cream-dark: #ede9e1;
+    --text: #1a1a2e;
+    --muted: #6b6b7a;
+    --border: rgba(26,26,46,0.12);
+    --white: #ffffff;
+  }
+
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 18px 60px;
+    background: rgba(247,244,239,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; color: var(--navy); letter-spacing: 1px; }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a { font-size: 13.5px; color: var(--muted); text-decoration: none; font-weight: 400; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--navy); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh; display: flex; align-items: center;
+    padding: 120px 60px 80px; position: relative; overflow: hidden;
+  }
+  .hero-bg { position: absolute; top: -80px; right: -80px; width: 520px; height: 520px; border-radius: 50%; background: var(--navy); opacity: 0.05; pointer-events: none; }
+  .hero-bg2 { position: absolute; bottom: -60px; left: 30%; width: 300px; height: 300px; border-radius: 50%; background: var(--navy); opacity: 0.04; pointer-events: none; }
+  .hero-content { max-width: 820px; }
+  .hero-eyebrow { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 24px; }
+  .hero-dot { width: 8px; height: 8px; border-radius: 50%; background: #2ecc8a; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.6; transform: scale(1.3); } }
+  .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(48px, 7vw, 82px); font-weight: 700; line-height: 1.05; color: var(--navy); margin-bottom: 24px; letter-spacing: -1px; }
+  .hero h1 em { font-style: italic; font-weight: 400; color: var(--muted); }
+  .hero-desc { font-size: 17px; color: var(--muted); max-width: 520px; line-height: 1.75; margin-bottom: 40px; font-weight: 300; }
+  .hero-cta { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
+  .btn-primary { display: inline-flex; align-items: center; gap: 8px; padding: 14px 28px; background: var(--navy); color: var(--cream); text-decoration: none; font-size: 14px; font-weight: 500; border-radius: 6px; transition: background 0.2s, transform 0.15s; letter-spacing: 0.3px; }
+  .btn-primary:hover { background: var(--navy-light); transform: translateY(-1px); }
+  .btn-secondary { display: inline-flex; align-items: center; gap: 8px; padding: 14px 28px; background: transparent; color: var(--navy); text-decoration: none; font-size: 14px; font-weight: 500; border-radius: 6px; border: 1.5px solid var(--border); transition: border-color 0.2s, transform 0.15s; }
+  .btn-secondary:hover { border-color: var(--navy); transform: translateY(-1px); }
+  .hero-stats { display: flex; gap: 48px; margin-top: 64px; padding-top: 40px; border-top: 1px solid var(--border); }
+  .stat-num { font-family: 'Playfair Display', serif; font-size: 36px; font-weight: 700; color: var(--navy); line-height: 1; margin-bottom: 4px; }
+  .stat-label { font-size: 12.5px; color: var(--muted); letter-spacing: 0.5px; }
+
+  /* SECTIONS */
+  section { padding: 100px 60px; }
+  section:nth-child(even) { background: var(--white); }
+  .section-header { margin-bottom: 56px; }
+  .section-tag { font-size: 11px; font-weight: 500; letter-spacing: 2.5px; text-transform: uppercase; color: var(--muted); margin-bottom: 12px; }
+  .section-title { font-family: 'Playfair Display', serif; font-size: clamp(32px, 4vw, 48px); font-weight: 700; color: var(--navy); line-height: 1.1; letter-spacing: -0.5px; }
+
+  /* EDUCATION */
+  .edu-card { background: var(--cream); border-radius: 16px; padding: 40px 44px; display: flex; justify-content: space-between; align-items: flex-start; border: 1px solid var(--border); gap: 24px; transition: transform 0.2s; }
+  .edu-card:hover { transform: translateY(-2px); }
+  .edu-icon { width: 52px; height: 52px; background: var(--navy); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; }
+  .edu-icon svg { width: 24px; height: 24px; stroke: var(--cream); fill: none; stroke-width: 2; }
+  .edu-name { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
+  .edu-degree { font-size: 15px; color: var(--muted); font-style: italic; margin-bottom: 12px; }
+  .edu-location { font-size: 13px; color: var(--muted); display: flex; align-items: center; gap: 5px; }
+  .edu-year-badge { background: var(--navy); color: var(--cream); font-size: 13px; font-weight: 500; padding: 8px 16px; border-radius: 20px; white-space: nowrap; align-self: flex-start; }
+
+  /* SKILLS */
+  .skills-container { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  .skill-card { background: var(--cream); border: 1px solid var(--border); border-radius: 14px; padding: 28px 30px; transition: transform 0.2s, box-shadow 0.2s; }
+  .skill-card:hover { transform: translateY(-3px); box-shadow: 0 12px 40px rgba(26,26,46,0.08); }
+  .skill-card-icon { width: 40px; height: 40px; background: var(--navy); border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 16px; }
+  .skill-card-icon svg { width: 20px; height: 20px; stroke: var(--cream); fill: none; stroke-width: 2; }
+  .skill-card-title { font-size: 12px; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); margin-bottom: 14px; }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+  .skill-tag { font-size: 13px; padding: 5px 12px; border-radius: 5px; background: var(--white); border: 1px solid var(--border); color: var(--navy); font-weight: 400; }
+
+
+  /* INTERNSHIP */
+  .internship-card {
+    background: var(--cream);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 40px 44px;
+    position: relative;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .internship-card:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(26,26,46,0.08); }
+  .internship-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 24px; margin-bottom: 20px; }
+  .internship-icon { width: 52px; height: 52px; background: var(--navy); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; }
+  .internship-icon svg { width: 24px; height: 24px; stroke: var(--cream); fill: none; stroke-width: 2; }
+  .internship-badge { background: var(--navy); color: var(--cream); font-size: 12px; font-weight: 500; padding: 6px 14px; border-radius: 20px; white-space: nowrap; align-self: flex-start; letter-spacing: 0.3px; }
+  .internship-role { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; color: var(--navy); margin-bottom: 4px; }
+  .internship-company { font-size: 15px; color: var(--muted); font-style: italic; margin-bottom: 10px; }
+  .internship-meta { display: flex; gap: 20px; flex-wrap: wrap; margin-bottom: 20px; }
+  .internship-meta-item { font-size: 13px; color: var(--muted); display: flex; align-items: center; gap: 5px; }
+  .internship-meta-item svg { width: 13px; height: 13px; stroke: currentColor; fill: none; stroke-width: 2; }
+  .internship-desc { font-size: 15px; color: var(--muted); line-height: 1.75; margin-bottom: 24px; font-weight: 300; max-width: 720px; }
+  .internship-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 28px; }
+  .internship-tag { font-size: 12.5px; padding: 5px 13px; border-radius: 5px; background: var(--white); border: 1px solid var(--border); color: var(--navy); }
+
+  /* ── CERTIFICATIONS — FIXED ── */
+  .cert-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+
+  .cert-card {
+    background: var(--white);
+    border: 1.5px solid var(--border);
+    border-radius: 14px;
+    padding: 20px 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .cert-card:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(26,26,46,0.08); }
+
+  .cert-top { display: flex; align-items: flex-start; gap: 14px; }
+
+  .cert-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--navy);        /* FIXED: dark navy, clearly visible */
+    line-height: 1;
+    min-width: 28px;
+    opacity: 0.35;
+  }
+
+  .cert-info { flex: 1; }
+  .cert-name { font-size: 14px; font-weight: 500; color: var(--navy); margin-bottom: 6px; line-height: 1.4; }
+
+  .cert-org-badge {
+    display: inline-block; font-size: 11px; font-weight: 500;
+    padding: 2px 9px; border-radius: 20px; letter-spacing: 0.3px;
+  }
+  .badge-ibm { background: #dbeafe; color: #1d4ed8; }
+  .badge-coursera { background: #d1fae5; color: #065f46; }
+  .badge-rf { background: #fef3c7; color: #92400e; }
+  .badge-mw { background: #fce7f3; color: #9d174d; }
+
+  /* View Certificate button — FIXED: clearly visible */
+  .cert-view-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12.5px;
+    font-weight: 500;
+    color: var(--navy);
+    background: var(--cream);
+    border: 1.5px solid var(--navy);
+    padding: 6px 14px;
+    border-radius: 6px;
+    text-decoration: none;
+    width: fit-content;
+    transition: background 0.15s, color 0.15s;
+    cursor: pointer;
+  }
+  .cert-view-btn:hover { background: var(--navy); color: var(--cream); }
+  .cert-view-btn svg { width: 13px; height: 13px; stroke: currentColor; fill: none; stroke-width: 2.5; flex-shrink: 0; }
+
+  /* ACTIVITIES */
+  .activity-card { display: flex; gap: 28px; align-items: flex-start; padding: 36px 40px; background: var(--cream); border-radius: 16px; border: 1px solid var(--border); max-width: 700px; transition: transform 0.2s; }
+  .activity-card:hover { transform: translateY(-2px); }
+  .activity-num { font-family: 'Playfair Display', serif; font-size: 52px; font-weight: 700; color: var(--cream-dark); line-height: 1; margin-top: -4px; }
+  .activity-title { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--navy); margin-bottom: 8px; }
+  .activity-desc { font-size: 15px; color: var(--muted); line-height: 1.7; }
+
+  /* LANGUAGES & INTERESTS */
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; }
+  .about-block-title { font-size: 11px; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 16px; }
+  .lang-tags, .interest-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+  .lang-tag { font-size: 14px; padding: 8px 18px; border-radius: 6px; background: var(--navy); color: var(--cream); font-weight: 400; }
+  .interest-tag { font-size: 14px; padding: 8px 18px; border-radius: 6px; background: var(--white); border: 1px solid var(--border); color: var(--navy); }
+
+  /* CONTACT */
+  .contact-section { background: var(--navy) !important; text-align: center; }
+  .contact-section .section-tag { color: rgba(247,244,239,0.4); }
+  .contact-section .section-title { color: var(--cream); }
+  .contact-desc { font-size: 17px; color: rgba(247,244,239,0.6); max-width: 480px; margin: 16px auto 48px; line-height: 1.7; font-weight: 300; }
+  .contact-cards { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
+  .contact-card { display: flex; align-items: center; gap: 10px; padding: 16px 24px; background: rgba(247,244,239,0.08); border: 1px solid rgba(247,244,239,0.15); border-radius: 10px; color: var(--cream); text-decoration: none; font-size: 14px; transition: background 0.2s, transform 0.15s; }
+  .contact-card:hover { background: rgba(247,244,239,0.15); transform: translateY(-2px); }
+  .contact-card svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 2; }
+
+  footer { background: var(--navy); border-top: 1px solid rgba(247,244,239,0.08); text-align: center; padding: 24px; font-size: 13px; color: rgba(247,244,239,0.3); }
+
+  /* ANIMATIONS */
+  .fade-in { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    nav { padding: 16px 24px; }
+    .nav-links { display: none; }
+    .hero { padding: 100px 24px 60px; }
+    section { padding: 70px 24px; }
+    .hero-stats { gap: 28px; }
+    .skills-container, .cert-grid, .about-grid { grid-template-columns: 1fr; }
+    .activity-card { flex-direction: column; gap: 12px; }
+    .activity-num { font-size: 36px; }
+    .edu-card { flex-direction: column; }
+    .contact-cards { flex-direction: column; align-items: center; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">MAG</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#internship">Internship</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#certifications">Certifications</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="Michael_Alden_Resume.pdf" target="_blank">Resume</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="about">
+  <div class="hero-bg"></div>
+  <div class="hero-bg2"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow"><span class="hero-dot"></span>Open to opportunities</div>
+    <h1>Michael Alden<br><em>Gomez A</em></h1>
+    <p class="hero-desc">IT undergraduate at Sathyabama Institute of Science and Technology, passionate about data science, Python, and cloud technologies. Certified across 8 industry courses — building real skills for a data-driven world.</p>
+    <div class="hero-cta">
+      <a href="mailto:alden.agnel06@gmail.com" class="btn-primary">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+        Get in touch
+      </a>
+      <a href="https://www.linkedin.com/in/alden-gomez-169864314" target="_blank" class="btn-secondary">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        LinkedIn
+      </a>
+      <a href="Michael_Alden_Resume.pdf" target="_blank" class="btn-secondary">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        View Resume
+      </a>
+    </div>
+    <div class="hero-stats">
+      <div><div class="stat-num">8</div><div class="stat-label">Certifications</div></div>
+      <div><div class="stat-num">3+</div><div class="stat-label">Programming skills</div></div>
+      <div><div class="stat-num">2028</div><div class="stat-label">Graduating year</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="section-header fade-in">
+    <div class="section-tag">Background</div>
+    <div class="section-title">Education</div>
+  </div>
+  <div class="edu-card fade-in">
+    <div>
+      <div class="edu-icon">
+        <svg viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+      </div>
+      <div class="edu-name">Sathyabama Institute of Science and Technology</div>
+      <div class="edu-degree">Bachelor of Technology — Information Technology</div>
+      <div class="edu-location">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+        Chennai, India
+      </div>
+    </div>
+    <div class="edu-year-badge">2024 – 2028</div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-header fade-in">
+    <div class="section-tag">What I know</div>
+    <div class="section-title">Skills</div>
+  </div>
+  <div class="skills-container">
+    <div class="skill-card fade-in">
+      <div class="skill-card-icon"><svg viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>
+      <div class="skill-card-title">Programming languages</div>
+      <div class="skill-tags"><span class="skill-tag">Python</span><span class="skill-tag">C Programming</span><span class="skill-tag">SQL</span></div>
+    </div>
+    <div class="skill-card fade-in">
+      <div class="skill-card-icon"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div>
+      <div class="skill-card-title">Office tools</div>
+      <div class="skill-tags"><span class="skill-tag">Microsoft Excel</span><span class="skill-tag">Microsoft Word</span><span class="skill-tag">PowerPoint</span></div>
+    </div>
+    <div class="skill-card fade-in">
+      <div class="skill-card-icon"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg></div>
+      <div class="skill-card-title">Databases</div>
+      <div class="skill-tags"><span class="skill-tag">SQL</span><span class="skill-tag">Relational Databases</span></div>
+    </div>
+    <div class="skill-card fade-in">
+      <div class="skill-card-icon"><svg viewBox="0 0 24 24"><path d="M3 3h7v7H3zM14 3h7v7h-7zM14 14h7v7h-7zM3 14h7v7H3z"/></svg></div>
+      <div class="skill-card-title">Other</div>
+      <div class="skill-tags"><span class="skill-tag">Data Analysis</span><span class="skill-tag">Cloud Fundamentals</span><span class="skill-tag">MATLAB</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- INTERNSHIP -->
+<section id="internship">
+  <div class="section-header fade-in">
+    <div class="section-tag">Experience</div>
+    <div class="section-title">Internship</div>
+  </div>
+  <div class="internship-card fade-in">
+    <div class="internship-icon">
+      <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><line x1="12" y1="12" x2="12" y2="12"/></svg>
+    </div>
+    <div class="internship-header">
+      <div>
+        <div class="internship-role">Data Analytics Intern</div>
+        <div class="internship-company">Codec Technologies Pvt. Ltd.</div>
+      </div>
+      <span class="internship-badge">Online Internship</span>
+    </div>
+    <div class="internship-meta">
+      <div class="internship-meta-item">
+        <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        16 April 2026 — 16 May 2026
+      </div>
+      <div class="internship-meta-item">
+        <svg viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+        India
+      </div>
+      <div class="internship-meta-item">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        1 Month · AICTE &amp; ICAC Approved
+      </div>
+    </div>
+    <p class="internship-desc">Completed an online internship gaining practical industry experience. Applied academic knowledge in a professional setting, developing real-world skills in technology and problem-solving through a remote, hands-on program.</p>
+    <div class="internship-tags">
+      <span class="internship-tag">Data Analytics</span>
+      <span class="internship-tag">Python</span>
+      <span class="internship-tag">SQL</span>
+      <span class="internship-tag">AICTE Approved</span>
+    </div>
+    <a href="Internship_Certificate.pdf" target="_blank" class="cert-view-btn">
+      <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+      View Internship Certificate
+    </a>
+  </div>
+</section>
+
+<!-- CERTIFICATIONS — FIXED -->
+<section id="certifications">
+  <div class="section-header fade-in">
+    <div class="section-tag">Credentials</div>
+    <div class="section-title">Certifications</div>
+  </div>
+  <div class="cert-grid">
+
+    <div class="cert-card fade-in">
+      <div class="cert-top">
+        <div class="cert-num">01</div>
+        <div class="cert-info">
+          <div class="cert-name">Python for Data Science</div>
+          <span class="cert-org-badge badge-rf">Reliance Foundation</span>
+        </div>
+      </div>
+      <a href="python_certificate.pdf" target="_blank" class="cert-view-btn">
+        <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        View Certificate
+      </a>
+    </div>
+
+    <div class="cert-card fade-in">
+      <div class="cert-top">
+        <div class="cert-num">02</div>
+        <div class="cert-info">
+          <div class="cert-name">Python 101 for Data Science</div>
+          <span class="cert-org-badge badge-ibm">IBM</span>
+        </div>
+      </div>
+      <a href="IBM_PY0101EN_Certificate.pdf" target="_blank" class="cert-view-btn">
+        <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        View Certificate
+      </a>
+    </div>
+
+    <div class="cert-card fade-in">
+      <div class="cert-top">
+        <div class="cert-num">03</div>
+        <div class="cert-info">
+          <div class="cert-name">Data Analysis with Python</div>
+          <span class="cert-org-badge badge-ibm">IBM</span>
+        </div>
+      </div>
+      <a href="IBM_DA0101EN_Certificate.pdf" target="_blank" class="cert-view-btn">
+        <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        View Certificate
+      </a>
+    </div>
+
+    <div class="cert-card fade-in">
+      <div class="cert-top">
+        <div class="cert-num">04</div>
+        <div class="cert-info">
+          <div class="cert-name">SQL and Relational Databases 101</div>
+          <span class="cert-org-badge badge-ibm">IBM</span>
+        </div>
+      </div>
+      <a href="IBM_DB0101EN_Certificate.pdf" target="_blank" class="cert-view-btn">
+        <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        View Certificate
+      </a>
+    </div>
+
+    <div class="cert-card fade-in">
+      <div class="cert-top">
+        <div class="cert-num">05</div>
+        <div class="cert-info">
+          <div class="cert-name">Prompt Engineering for Everyone</div>
+          <span class="cert-org-badge badge-ibm">IBM</span>
+        </div>
+      </div>
+      <a href="IBM_AI0117EN_Certificate.pdf" target="_blank" class="cert-view-btn">
+        <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        View Certificate
+      </a>
+    </div>
+
+    <div class="cert-card fade-in">
+      <div class="cert-top">
+        <div class="cert-num">06</div>
+        <div class="cert-info">
+          <div class="cert-name">Introduction to Cloud</div>
+          <span class="cert-org-badge badge-ibm">IBM</span>
+        </div>
+      </div>
+      <a href="IBM_CC0101EN_Certificate.pdf" target="_blank" class="cert-view-btn">
+        <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        View Certificate
+      </a>
+    </div>
+
+    <div class="cert-card fade-in">
+      <div class="cert-top">
+        <div class="cert-num">07</div>
+        <div class="cert-info">
+          <div class="cert-name">Excel, Word & PowerPoint — <em>with Honours</em></div>
+          <span class="cert-org-badge badge-coursera">Coursera</span>
+        </div>
+      </div>
+      <a href="Coursera_36839D7M54YR.pdf" target="_blank" class="cert-view-btn">
+        <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        View Certificate
+      </a>
+    </div>
+
+    <div class="cert-card fade-in">
+      <div class="cert-top">
+        <div class="cert-num">08</div>
+        <div class="cert-info">
+          <div class="cert-name">Organize Tabular Data in MATLAB</div>
+          <span class="cert-org-badge badge-mw">MathWorks</span>
+        </div>
+      </div>
+      <a href="44120001_Michael_Alden_Gomez_A.pdf" target="_blank" class="cert-view-btn">
+        <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        View Certificate
+      </a>
+    </div>
+
+  </div>
+</section>
+
+<!-- ACTIVITIES -->
+<section id="activities">
+  <div class="section-header fade-in">
+    <div class="section-tag">Involvement</div>
+    <div class="section-title">Activities</div>
+  </div>
+  <div class="activity-card fade-in">
+    <div class="activity-num">01</div>
+    <div>
+      <div class="activity-title">Techno Summit 2024</div>
+      <div class="activity-desc">Participated in a national-level technical symposium, engaging with emerging technologies, industry innovations, and peer-led project showcases — demonstrating a proactive interest in the evolving tech landscape.</div>
+    </div>
+  </div>
+</section>
+
+<!-- LANGUAGES & INTERESTS -->
+<section>
+  <div class="section-header fade-in">
+    <div class="section-tag">Personal</div>
+    <div class="section-title">Languages & Interests</div>
+  </div>
+  <div class="about-grid fade-in">
+    <div>
+      <div class="about-block-title">Languages spoken</div>
+      <div class="lang-tags"><span class="lang-tag">English</span><span class="lang-tag">Tamil</span></div>
+    </div>
+    <div>
+      <div class="about-block-title">Hobbies & interests</div>
+      <div class="interest-tags">
+        <span class="interest-tag">AI & emerging tech</span>
+        <span class="interest-tag">Cricket</span>
+        <span class="interest-tag">Music</span>
+        <span class="interest-tag">Documentaries</span>
+        <span class="interest-tag">Problem solving</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact-section" id="contact">
+  <div class="section-header">
+    <div class="section-tag">Say hello</div>
+    <div class="section-title">Get in touch</div>
+  </div>
+  <p class="contact-desc">I'm always open to new opportunities, collaborations, or just a good conversation about tech.</p>
+  <div class="contact-cards">
+    <a href="mailto:alden.agnel06@gmail.com" class="contact-card">
+      <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+      alden.agnel06@gmail.com
+    </a>
+    <a href="tel:+919840128270" class="contact-card">
+      <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      +91 98401 28270
+    </a>
+    <a href="https://www.linkedin.com/in/alden-gomez-169864314" target="_blank" class="contact-card">
+      <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+      LinkedIn
+    </a>
+    <a href="Michael_Alden_Resume.pdf" target="_blank" class="contact-card">
+      <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+      View Resume
+    </a>
+  </div>
+</section>
+
+<footer>© 2026 Michael Alden Gomez A · Chennai, India · Built with care</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+      e.preventDefault();
+      const target = document.querySelector(this.getAttribute('href'));
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+</script>
+</body>
+</html>
