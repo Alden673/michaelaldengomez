@@ -49,20 +49,27 @@ app.get('*splat', (request, response) => {
 // Connect MongoDB and start server
 async function startServer() {
   try {
+    console.log('Starting portfolio server...');
+    console.log(
+      'MONGODB_URI exists:',
+      Boolean(process.env.MONGODB_URI)
+    );
+    console.log('PORT:', port);
+
     await mongoose.connect(process.env.MONGODB_URI);
 
     console.log('MongoDB connected successfully');
 
     app.listen(port, '0.0.0.0', () => {
       console.log(
-        `Portfolio server running at http://localhost:${port}`
+        `Portfolio server running on port ${port}`
       );
     });
   } catch (error) {
-    console.error(
-      'MongoDB connection failed:',
-      error.message
-    );
+    console.error('MongoDB connection failed!');
+    console.error('Error message:', error.message);
+    console.error('Full error:', error);
+    console.error('Error stack:', error.stack);
 
     process.exit(1);
   }
