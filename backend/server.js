@@ -29,17 +29,14 @@ app.use(express.static(projectRoot));
 let dbConnectionPromise = null;
 
 async function connectDatabase() {
-  // Already connected
   if (mongoose.connection.readyState === 1) {
     return;
   }
 
-  // Make sure MongoDB URI exists
   if (!process.env.MONGODB_URI) {
     throw new Error('MONGODB_URI environment variable is not set');
   }
 
-  // Create connection only once
   if (!dbConnectionPromise) {
     dbConnectionPromise = mongoose.connect(
       process.env.MONGODB_URI

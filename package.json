@@ -1,5 +1,17 @@
 {
+  "name": "michael-alden-gomez-portfolio",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Full-stack personal portfolio with Express and MongoDB",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
   "dependencies": {
-    "mongodb": "^7.6.0"
+    "cors": "^2.8.5",
+    "dotenv": "^16.6.1",
+    "express": "^5.1.0",
+    "mongoose": "^8.18.0"
   }
 }
