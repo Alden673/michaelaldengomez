@@ -53,7 +53,7 @@ async function startServer() {
 
     console.log('MongoDB connected successfully');
 
-    app.listen(port, () => {
+    app.listen(port, '0.0.0.0', () => {
       console.log(
         `Portfolio server running at http://localhost:${port}`
       );
