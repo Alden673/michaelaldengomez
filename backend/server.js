@@ -1,4 +1,6 @@
-require('dotenv').config();
+require('dotenv').config({
+  path: require('path').join(__dirname, '.env')
+});
 
 const path = require('path');
 const express = require('express');
@@ -23,6 +25,52 @@ app.use(express.json({
 // Serve portfolio frontend
 app.use(express.static(projectRoot));
 
+// Reuse MongoDB connection on Vercel
+let dbConnectionPromise = null;
+
+async function connectDatabase() {
+  // Already connected
+  if (mongoose.connection.readyState === 1) {
+    return;
+  }
+
+  // Make sure MongoDB URI exists
+  if (!process.env.MONGODB_URI) {
+    throw new Error('MONGODB_URI environment variable is not set');
+  }
+
+  // Create connection only once
+  if (!dbConnectionPromise) {
+    dbConnectionPromise = mongoose.connect(
+      process.env.MONGODB_URI
+    );
+  }
+
+  try {
+    await dbConnectionPromise;
+  } catch (error) {
+    dbConnectionPromise = null;
+    throw error;
+  }
+}
+
+// Connect to MongoDB for API requests
+app.use('/api', async (request, response, next) => {
+  try {
+    await connectDatabase();
+    next();
+  } catch (error) {
+    console.error(
+      'MongoDB connection failed:',
+      error.message
+    );
+
+    response.status(503).json({
+      error: 'Database connection failed'
+    });
+  }
+});
+
 // Health check
 app.get('/api/health', (request, response) => {
   response.json({
@@ -46,33 +94,15 @@ app.get('*splat', (request, response) => {
   );
 });
 
-// Connect MongoDB and start server
-async function startServer() {
-  try {
-    console.log('Starting portfolio server...');
+// Local development server
+// Vercel handles the server automatically.
+if (!process.env.VERCEL) {
+  app.listen(port, '0.0.0.0', () => {
     console.log(
-      'MONGODB_URI exists:',
-      Boolean(process.env.MONGODB_URI)
+      `Portfolio server running on http://localhost:${port}`
     );
-    console.log('PORT:', port);
-
-    await mongoose.connect(process.env.MONGODB_URI);
-
-    console.log('MongoDB connected successfully');
-
-    app.listen(port, '0.0.0.0', () => {
-      console.log(
-        `Portfolio server running on port ${port}`
-      );
-    });
-  } catch (error) {
-    console.error('MongoDB connection failed!');
-    console.error('Error message:', error.message);
-    console.error('Full error:', error);
-    console.error('Error stack:', error.stack);
-
-    process.exit(1);
-  }
+  });
 }
 
-startServer();
+// Export Express app for Vercel
+module.exports = app;
